@@ -1,0 +1,11 @@
+<?php
+if(isset($_POST['upload'])){
+    header("location:files");
+}
+elseif(isset($_POST['sd'])){
+    header("location:files");
+}
+elseif(isset($_POST['upload'])){
+    header("location:files");
+}
+?>
