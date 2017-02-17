@@ -1,13 +1,18 @@
 <ul id="navList">
     <li><a href="/" id="l"> Home</a></li><li>
-	<a href="/chat" id="lchat"> Chat</a></li><li>
+	<div class="dropdown">
+	    <span id="dropIcon"></span><a href="/forums" class="dropbtn" id="lforums"> Forums</a>
+	    <div class="dropdown-content">
+		<a id="lchat" href="/chat"> Chat</a>
+	    </div>
+	</div></li><li>
 	<a href="/info" id="linfo"> Info</a></li><li>
 	    <div class="dropdown">
 		<span id="dropIcon"></span><a href="/account" class="dropbtn" id="laccount"> Account</a>
 		<div class="dropdown-content">
 		    <a id="luserlist" href="/userlist"> Userlist</a>
 		    <?php if(Misc::li()): ?>
-		    <a class="logout" href="/logout">Log out</a>
+			<a class="logout" href="/logout">Log out</a>
 		    <?php endif; ?>
 		</div>
 	    </div>
@@ -97,6 +102,7 @@
  nav ul li{
      display:inline-block;
      text-align:center;
+     width:25%;
  }
  nav ul li a{
      display:block;
@@ -109,33 +115,14 @@
  nav ul li a:hover{
      background-color:#D0DFDF;
  }
- nav ul li:first-child:nth-last-child(1) {
-     width: 100%;
- }
-
- nav ul li:first-child:nth-last-child(2),
- nav ul li:first-child:nth-last-child(2) ~ li {
-     width: 50%;
- }
-
- nav ul li:first-child:nth-last-child(3),
- nav ul li:first-child:nth-last-child(3) ~ li {
-     width: 33.3333%;
- }
-
- nav ul li:first-child:nth-last-child(4),
- nav ul li:first-child:nth-last-child(4) ~ li {
-     width: 25%;
- }
-
- nav ul li:first-child:nth-last-child(5),
- nav ul li:first-child:nth-last-child(5) ~ li {
-     width: 20%;
- }
 
  #l:before{
      font-family: awesome;
      content: "\f015";
+ }
+ #lforums:before{
+     font-family:awesome;
+     content:"\f022";
  }
  #lchat:before{
      font-family:awesome;

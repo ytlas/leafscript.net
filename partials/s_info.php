@@ -3,7 +3,6 @@
 <p><?php echo "Ip: <span style='color:darkcyan'>".$req->ip;?></span></p>
 <p><?php echo "Method: <span style='color:red'>".$req->method;?></span></p>
 <p><?php echo "Agent: <span style='color:blue'>".$req->agent;?></span></p>
-<p><a href="/userlist">Check out the userlist</a></p>
 <style>
  section h1:before{
      font-family:awesome;

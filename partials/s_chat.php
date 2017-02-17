@@ -1,8 +1,7 @@
-<h1> Chat</h1>
-<p>This is not done yet. Obviously.</p>
+<h1 id="title"> Chat</h1>
 <style>
- section h1:before{
+ #title:before{
      font-family:awesome;
-     content:'\f086';
+     content:"\f086";
  }
 </style>

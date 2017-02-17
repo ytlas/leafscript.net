@@ -8,7 +8,7 @@
 <?php
 $result=$con->query("SELECT user.id as userId,user.name as userName,groups.name as groupName,groups.color as color,user.dateRegistered,user.dateActive
 		     FROM user
-		     INNER JOIN groups ON user.groupName=groups.name");
+		     INNER JOIN groups ON user.groupName=groups.name ORDER BY groups.power DESC");
 while ($row=$result->fetch_assoc()){
     $userId=$row['userId'];
     $userName=$row['userName'];
