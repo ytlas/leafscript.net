@@ -1,0 +1,36 @@
+@font-face {
+    font-family:ubuntu;
+    src: url(ubuntu.ttf);
+}
+@font-face {
+    font-family:awesome;
+    src:url(fontAwesome.ttf);
+}
+body{
+    max-width:800px;
+    margin:auto;
+    font-family:ubuntu;
+    color:black;
+    background-color:white;
+}
+body *{
+    word-wrap:break-word;
+}
+hr{
+    border:1px solid black;
+}
+section{
+    position:relative;
+}
+section,footer{
+    padding-left:1em;
+    padding-right:1em;
+}
+#path{
+    position:absolute;
+    top:-1.2em;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
