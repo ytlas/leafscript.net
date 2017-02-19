@@ -33,15 +33,15 @@ if(Misc::li()&&
 		$row[$row['userId']]=$base64;
 	    }
 	    ?>
-		<div class="message"><img src="data:image/png;base64,<?=$row[$row['userId']]?>" alt="avatar"><div class="messageDate"><?=$row['chatDateSent']?></div><span class="content">[<span style='color:<?=$row['groupColor']?>'><b><?=$row['groupName']?></span></b>] <?=$row['userName']?>: <?=$row['chatMessage']?></span></div>
+		<div class="message"><img src="data:image/jpeg;base64,<?=$row[$row['userId']]?>" alt="avatar"><div class="messageDate"><?=$row['chatDateSent']?></div><span class="content">[<span style='color:<?=$row['groupColor']?>'><b><?=$row['groupName']?></span></b>] <a style="text-decoration:none;color:black;" href="/profile/<?=$row['userName']?>"><?=$row['userName']?></a>: <?=$row['chatMessage']?></span></div>
 	    <?php endwhile; ?>
 	<?php else: ?>
 	    <p>No chat messages.</p>
 	<?php endif; ?>
     </div>
     <?php if(Misc::li()): ?>
-    <form method="post" action="/chat">
-	<input type="text" autocomplete="off" name="message" pattern=".{3,255}" required title="3 to 255 characters" autofocus>
+    <form method="post" action="/chat#autoreload">
+	<input type="text" autocomplete="off" name="message" pattern=".{3,255}" required title="3 to 255 characters" id="message" autofocus>
 	<input type="submit" autocomplete="off" value="Send">
     </form>
     <?php else: ?>
@@ -50,6 +50,7 @@ if(Misc::li()&&
 	<input type="submit" autocomplete="off" value="Send" disabled>
     </form>
     <?php endif; ?>
+    <span id="reloadCB"><input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCBin"> Auto Refresh</span>
 </div>
 <style>
  #title:before{
@@ -107,6 +108,11 @@ if(Misc::li()&&
     height:10em;
     }
     }
+ #reloadCB{
+     position:absolute;
+     z-index:2;
+     top:-1.5em;
+ }
 
 </style>
 <script
@@ -116,5 +122,28 @@ if(Misc::li()&&
 <script>
  var chatBox=document.getElementById("chatBox");
  chatBox.scrollTop=chatBox.scrollHeight;
-
+ var reloading;
+ if(window.location.hash=="#autoreload")
+     document.getElementById("reloadCBin").checked=true;
+ function checkReloading(){
+     if (window.location.hash=="#autoreload"){
+	 reloading=setTimeout(function(){
+	     console.log(document.getElementById("message").value)
+	     if(document.getElementById("message").value.length==0)
+		 window.location.reload();
+	     else
+		 checkReloading();
+	 },10000);
+     }
+ }
+ function toggleAutoRefresh(cb) {
+     if (cb.checked) {
+	 window.location.replace("#autoreload");
+	 reloading=setTimeout("window.location.reload();",10000);
+     } else {
+	 window.location.replace("#");
+	 clearTimeout(reloading);
+     }
+ }
+ window.onload=checkReloading();
 </script>

@@ -46,7 +46,6 @@
 	</div>
 	<div id="credentials">
 	    <p>Username: <?=$row['userName']?><br>
-		Email: <?=$row['userEmail']?><br>
 		Group: {<span style="color:<?=$row['groupColor']?>"><?=$row['groupName']?></span>}<br>
 		Files uploaded: <?=$row['numFiles']?><br>
 		Registered since: <?=$row['dateRegistered']?>

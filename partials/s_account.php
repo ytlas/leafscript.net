@@ -9,13 +9,13 @@
 </form>
 <p><a href="/password">Have you lost your password?</a></p>
 <h3>Register an account:</h3>
+<p style="color:green">Registrations are up.</p>
 <form method="post" action="/register">
     <input type="text" placeholder="Username" name="userName" pattern="[a-zA-Z0-9_]{3,16}" required title="3 to 16 characters and only alphanumeric characters."><br>
     <input type="email" placeholder="Email address" name="userEmail"><br>
     <input type="password" placeholder="Password" name="userPassword" pattern="[^.*$]{8,32}" required title="8 to 32 characters."><br>
     <input type="text" placeholder="Captcha" name="registerCaptcha" size="10" maxlength="6">
     <input type="submit" value="Sign up">
-
 </form>
 <img id="captcha" src="https://leafscript.net/securimage/securimage_show.php" alt="CAPTCHA Image">
     <a href="#" onclick="document.getElementById(\'captcha\').src = \'/securimage/securimage_show.php?\' + Math.random(); return false">[ Different Image ]</a>

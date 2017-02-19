@@ -1,10 +1,11 @@
 <?php
+ini_set('display_errors', 'on'); error_reporting(E_ALL);
 session_start();
 include 'classes/Sql.php';
 include 'classes/Misc.php';
 include 'classes/File.php';
 include 'classes/User.php';
-$con=new mysqli('localhost','root','Qw!kmdo<','ls');
+include 'con.php';
 if((Misc::li()&&
    User::priv("user.downloadFiles")&&
     isset($_GET['fileId']))||

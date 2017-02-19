@@ -1,6 +1,6 @@
 <?php
-/* if(isset($_POST['message'])){
- *     header("location:/chat");
- * }
- *  */
+if(isset($_POST['message'])){
+    header("location:/chat");
+}
+
 ?>

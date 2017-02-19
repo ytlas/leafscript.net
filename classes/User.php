@@ -164,5 +164,10 @@ class User{
 				      WHERE user.name='$userName'")->num_rows;
 	return $row;
     }
+    static function purge($userName){
+	global $con;
+	$userId=$con->query("SELECT id as userId FROM user WHERE name='$userName'")->fetch_assoc()['userId'];
+
+    }
 }
 ?>
