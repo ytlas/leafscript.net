@@ -144,5 +144,25 @@ class User{
     static function priv($permsName){
 	return self::isAllowed($_SESSION['userName'],$permsName);
     }
+    static function avatar($userName,$size){
+	$prefix='../avatars/';
+	$id=self::id($userName);
+	if(file_exists($prefix.$id."_".$size.".jpg"))
+	    return $prefix.$id."_".$size.".jpg";
+	else
+	    return $prefix."default_".$size.".png";
+    }
+    static function credentials($userName){
+	global $con;
+	$row=$con->query("SELECT user.name AS userName,user.dateRegistered,user.email AS userEmail,user.groupName,groups.color as groupColor
+			  FROM user
+			  INNER JOIN groups ON user.groupName=groups.name
+			  WHERE user.name='$userName'")->fetch_assoc();
+
+	$row['numFiles']=$con->query("SELECT files.id FROM files
+				      INNER JOIN user ON files.userId=user.id
+				      WHERE user.name='$userName'")->num_rows;
+	return $row;
+    }
 }
 ?>

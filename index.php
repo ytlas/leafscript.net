@@ -49,6 +49,6 @@ $req->log($_SERVER['REQUEST_URI']);
 	    else echo "<h1>404 error</h1><p>The page you were looking for was not found</p>";
 	    ?>
 	</section>
-	<hr><footer><?php include 'partials/footer.php';?></footer><hr>
+	<footer><hr><?php include 'partials/footer.php';?><hr></footer>
     </body>
 </html>
