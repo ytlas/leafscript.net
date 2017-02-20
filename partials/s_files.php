@@ -92,10 +92,10 @@ elseif((User::priv("user.deleteFiles")||User::priv("user.shareFiles"))&&isset($_
 		    </center></td>
 		    <td><?php
 			$sresult=File::sharedWith($id);
-			if(File::isPublic($id)){
-			    print("It is public");
-			}
-			elseif($sresult->num_rows>0){
+			if($sresult->num_rows>0){
+			    if(File::isPublic($id)){
+				print("It is public, ");
+			    }
 			    while($srow=$sresult->fetch_assoc()){
 				print($srow['userName'].', ');
 			    }

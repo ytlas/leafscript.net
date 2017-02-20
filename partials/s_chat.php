@@ -6,7 +6,11 @@ if(Misc::li()&&
     $message=trim($_POST['message']);
     if(!(strlen($message)<256&&strlen($message)>2)){
 	echo "Your message is too long.";
-    }else{
+    }
+    elseif($message[0]=='!'&&User::priv("user.chatCommand")){
+	echo Misc::parseCommand($message);
+    }
+    else{
 	$message=$con->real_escape_string(htmlspecialchars($message));
 	$con->query("INSERT INTO chat (userId,message,dateSent) VALUES ($userId,'$message',now())");
     }
@@ -16,11 +20,16 @@ if(Misc::li()&&
 <div id="chatContainer">
     <div id="chatBox">
 	<?php
+	if(Misc::li())
+	    $userId=User::id($_SESSION['userName']);
+	else $userId=0;
 	$result=$con->query("SELECT user.id as userId,groups.color as groupColor,user.groupName as groupName,
-				    user.name as userName,chat.message as chatMessage,chat.dateSent as chatDateSent
+				    user.name as userName,chat.message as chatMessage,chat.dateSent as chatDateSent,
+				    chat.id as chatId
 			     FROM chat
 			     INNER JOIN user   ON chat.userId=user.id
 			     INNER JOIN groups ON user.groupName=groups.name
+			     WHERE alert=0 OR user.id=$userId
 			     ORDER BY chat.id ASC
 			     ");
 	if($result->num_rows>0):
@@ -33,20 +42,20 @@ if(Misc::li()&&
 		$row[$row['userId']]=$base64;
 	    }
 	    ?>
-		<div class="message"><img src="data:image/jpeg;base64,<?=$row[$row['userId']]?>" alt="avatar"><div class="messageDate"><?=$row['chatDateSent']?></div><span class="content">[<span style='color:<?=$row['groupColor']?>'><b><?=$row['groupName']?></span></b>] <a style="text-decoration:none;color:black;" href="/profile/<?=$row['userName']?>"><?=$row['userName']?></a>: <?=$row['chatMessage']?></span></div>
+		<div class="message"><img src="data:image/jpeg;base64,<?=$row[$row['userId']]?>" alt="avatar"><div class="chatId">No. <?=$row['chatId']?></div><div class="messageDate"><?=$row['chatDateSent']?></div><span class="content">[<span style='color:<?=$row['groupColor']?>'><b><?=$row['groupName']?></span></b>] <a style="text-decoration:none;color:black;" href="/profile/<?=$row['userName']?>"><?=$row['userName']?></a>: <?=$row['chatMessage']?></span></div>
 	    <?php endwhile; ?>
 	<?php else: ?>
 	    <p>No chat messages.</p>
 	<?php endif; ?>
     </div>
-    <?php if(Misc::li()): ?>
+    <?php if(Misc::li()&&User::priv("user.chat")): ?>
     <form method="post" action="/chat#autoreload">
 	<input type="text" autocomplete="off" name="message" pattern=".{3,255}" required title="3 to 255 characters" id="message" autofocus>
 	<input type="submit" autocomplete="off" value="Send">
     </form>
     <?php else: ?>
     <form>
-	<input type="text" autocomplete="off" name="message" placeholder="You have to be logged in to chat" disabled>
+	<input type="text" autocomplete="off" name="message" placeholder="You have to be logged in to chat, and have permission to." disabled>
 	<input type="submit" autocomplete="off" value="Send" disabled>
     </form>
     <?php endif; ?>
@@ -98,7 +107,13 @@ if(Misc::li()&&
      top:0;
      position:absolute;
      left:4em;
- }
+    }
+    .chatId{
+    font-size:0.6em;
+    bottom:0;
+    position:absolute;
+    left:4em;
+    }
  .content{
      margin-left:2em;
  }

@@ -32,10 +32,9 @@ class User{
 	    }
 	}
     }
-    static function alterGroup($userId,$groupName){
+    static function alterGroup($userName,$groupName){
 	global $con;
-	if($con->query("UPDATE user SET groupName='$groupName' WHERE id='$userId'"))
-	    return true;else return true;
+	$con->query("UPDATE user SET groupName='$groupName' WHERE name='$userName'");
     }
     static function alterPassword($userId,$userPassword){
 	global $con;
@@ -59,7 +58,7 @@ class User{
 		$con->query("UPDATE user SET dateActive=now(),ipLast='".$req->ip."' WHERE name='".$row['userName']."'");
 	    }
 	    else{
-		return false;
+		session_destroy();
 	    }
 	    return true;
 	}
@@ -168,6 +167,10 @@ class User{
 	global $con;
 	$userId=$con->query("SELECT id as userId FROM user WHERE name='$userName'")->fetch_assoc()['userId'];
 
+    }
+    static function power($userName){
+	global $con;
+	return $con->query("SELECT groups.power as power FROM user INNER JOIN groups ON user.groupName=groups.name WHERE user.name='$userName'")->fetch_assoc()['power'];
     }
 }
 ?>
